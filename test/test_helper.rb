@@ -224,6 +224,7 @@ end
 
 JSONAPI.configuration.route_format = :underscored_route
 TestApp.routes.draw do
+  jsonapi_resources :coercions
   jsonapi_resources :people
   jsonapi_resources :special_people
   jsonapi_resources :comments

@@ -1,9 +1,11 @@
 require 'jsonapi/callbacks'
+require 'jsonapi/coercion'
 require 'jsonapi/relationship_builder'
 
 module JSONAPI
   class Resource
     include Callbacks
+    prepend Coercion
 
     attr_reader :context
 

@@ -19,6 +19,14 @@ ActiveRecord::Schema.define do
     t.timestamps null: false
   end
 
+  create_table :coercions, force: true do |t|
+    t.integer :integer
+    t.string :string
+    t.float :float
+    t.boolean :boolean
+    t.timestamps null: false
+  end
+
   create_table :author_details, force: true do |t|
     t.integer :person_id
     t.string  :author_stuff
@@ -295,6 +303,8 @@ ActiveRecord::Schema.define do
 end
 
 ### MODELS
+class Coercion < ActiveRecord::Base
+end
 class Person < ActiveRecord::Base
   has_many :posts, foreign_key: 'author_id'
   has_many :comments, foreign_key: 'author_id'
@@ -617,6 +627,8 @@ module Api
 end
 
 ### CONTROLLERS
+class CoercionsController < JSONAPI::ResourceController
+end
 class AuthorsController < JSONAPI::ResourceControllerMetal
 end
 
@@ -883,6 +895,31 @@ module Api
 end
 
 ### RESOURCES
+class CoercionResource < JSONAPI::Resource
+  attributes :integer,
+             :float,
+             :created_at,
+             :updated_at,
+             :string,
+             :boolean
+
+  filter :integer, type: :integer
+  filter :float, type: :float
+  filter :string, type: :string
+  filter :boolean, type: :boolean
+  filter :created_at_as_date, type: :date, apply: -> (records, value, _options) {
+    # the value will be coerced to date
+    value = value.first
+    records.where('created_at BETWEEN ? AND ?', value.beginning_of_day, value.end_of_day)
+  }
+  filter :created_at_as_date_time, type: :date_time, apply: -> (records, value, _options) {
+    # the value will be coerced to date_time
+    value = value.first
+    records.where('created_at = ?', value)
+  }
+  filter :string, type: :string, allow_nil: true
+
+end
 class BaseResource < JSONAPI::Resource
   abstract
 end

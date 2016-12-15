@@ -1,0 +1,26 @@
+001:
+  id: 1
+  integer: 1
+  float: 1.1
+  string: 'string11'
+  created_at: '2016-12-15 12:47:00'
+  updated_at: '2016-12-15 12:47:00'
+  boolean: true
+
+002:
+  id: 2
+  integer: 2
+  float: 2.1
+  string: 'string'
+  created_at: '2016-12-14 12:47:00'
+  updated_at: '2016-12-14 12:47:00'
+  boolean: false
+
+003:
+  id: 3
+  integer: 5
+  float: 2.18
+  string:
+  created_at: '2016-12-17 12:47:00'
+  updated_at: '2016-12-17 12:47:00'
+  boolean:
